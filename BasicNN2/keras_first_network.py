@@ -30,26 +30,35 @@ def TurnDatasetToNumeric(dataset):
         
     return dataset
 
-#C:\Users\lcristovao\Documents\GitHub\Neuronal_Network_training\BasicNN2
+#C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/BasicNN2
 
 # fix random seed for reproducibility
 numpy.random.seed(7)
 # Breast cancer dataset
-dataset=pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data")
-##First columnis patient Id that does not matter
+dataset=pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data",header=None)
+
+#Turn columns to numerical
 TurnDatasetToNumeric(dataset)
-dataset = dataset.iloc[:,1:].values
+
+##First columnis patient Id that does not matter
+dataset=dataset.iloc[:,1:]
+
+
+#change first column to last because its the class column
+dataset=pd.concat((dataset.iloc[:,1:],dataset.iloc[:,0]),axis=1)
+dataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/BasicNN2/breast_cancer.txt')
+
+dataset=dataset.values
 
 # split into input (X) and output (Y) variables
-X = dataset[:,1:-1]
-Y = dataset[:,0]
+X = dataset[:,:-1]
+Y = dataset[:,-1]
 
 n_atributes=X.shape[1]#number of columns
 # create model
 model = Sequential()
 model.add(Dense(12, input_dim=n_atributes, activation='relu'))
 model.add(Dense(8, activation='relu'))
-model.add(Dense(4, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 
