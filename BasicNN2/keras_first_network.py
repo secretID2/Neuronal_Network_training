@@ -57,7 +57,8 @@ Y = dataset[:,-1]
 n_atributes=X.shape[1]#number of columns
 # create model
 model = Sequential()
-model.add(Dense(12, input_dim=n_atributes, activation='relu'))
+model.add(Dense(24, input_dim=n_atributes, activation='relu'))
+model.add(Dense(12, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
@@ -66,7 +67,7 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Fit the model
-model.fit(X, Y, epochs=150, batch_size=10)
+model.fit(X, Y, epochs=300, batch_size=10)
 
 
 # evaluate the model
