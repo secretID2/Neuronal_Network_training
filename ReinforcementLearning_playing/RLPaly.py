@@ -51,8 +51,8 @@ dataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/B
 dataset=dataset.values
 
 # split into input (X) and output (Y) variables
-X = dataset[:,:-1]
-Y = dataset[:,-1]
+X = dataset[:10,:-1]
+Y = dataset[:10,-1]
 
 n_atributes=X.shape[1]#number of columns
 # create model
@@ -67,7 +67,7 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Fit the model
-model.fit(X, Y, epochs=300, batch_size=10)
+model.fit(X, Y, epochs=10, batch_size=1)
 
 
 # evaluate the model
