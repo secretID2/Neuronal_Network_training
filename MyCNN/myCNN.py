@@ -37,4 +37,9 @@ def TurnDatasetToNumeric(dataset):
 def init():
     return bt.static_file('index.html',root="files/")
 
+@bt.get('/Submit',method='POST')
+def Submit():
+    print(bt.request.forms.get('Class'))
+    return "OK"
+
 bt.run(host='localhost', port=80, server='paste')

@@ -1,8 +1,9 @@
 <canvas width="500" height="500" id="canvas" onmousemove="MousePos(event)" onmousedown="Repeat()" onmouseup="StopDraw()"></canvas>
 <input type="text" id="Class">
-<button onclick="SendPost()">Submit</button>
-<p id="OK" style="visibility:hidden;"><font color="green">Post submited with success</font></p>
-<p id="Fail" style="visibility:hidden;"><font color="red">Fail to send data</font></p>
+<button onclick="SendPost()">Submit</button><br>
+<button onclick="Clear()">Clear</button>
+<h1 id="OK" style="visibility:hidden;"><font color="green">Post submited with success</font></h1>
+<h1 id="Fail" style="visibility:hidden;"><font color="red">Fail to send data</font></h1>
 <script>
 var canvas=document.getElementById("canvas");
 var context=canvas.getContext("2d");  
@@ -10,6 +11,19 @@ var mouse=[0,0];//x and y
 var data_matrix=[];
 var matrix_size=10;
 var t;
+
+function Clear(){
+    for(i=0;i<matrix_size;i++){
+        data_matrix[i]=[];
+        for(j=0;j<matrix_size;j++){
+            data_matrix[i][j]=0;
+            
+            Draw(i,j,"white");
+        }
+    }
+    console.log(data_matrix);
+}
+    
 window.onload=function(){
     for(i=0;i<matrix_size;i++){
         data_matrix[i]=[];
@@ -37,6 +51,18 @@ function Repeat(e){
 function StopDraw(){
       clearInterval(t);  
 }
+//x and y from matrix
+function Draw(x,y,_color){
+    var width=canvas.width;
+    var height=canvas.height;
+    var xsquare_size=width/matrix_size;
+    var ysquare_size=height/matrix_size;
+    var posx=Math.round(x/(matrix_size/width));
+    var posy=Math.round(y/(matrix_size/height));
+    console.log("Hi: "+posx+", "+posy+", "+xsquare_size+", "+ysquare_size)
+    context.fillStyle = _color;
+    context.fillRect(posx, posy, xsquare_size, ysquare_size);
+}
 function MouseClick(){
     //change matrix according to mouse pos
     var X=mouse[0];
@@ -56,12 +82,12 @@ function MouseClick(){
     //change data matrix
     data_matrix[Mx][My]=1;
     //draw square
-    
-    var posx=Math.round(Mx/(matrix_size/width));
+    Draw(Mx,My,"black");
+    /*var posx=Math.round(Mx/(matrix_size/width));
     var posy=Math.round(My/(matrix_size/height));
     console.log("Hi: "+posx+", "+posy+", "+xsquare_size+", "+ysquare_size)
     context.fillRect(posx, posy, xsquare_size, ysquare_size);
-    //context.fillRect(60,40,10,10);
+    //context.fillRect(60,40,10,10);*/
     console.log(data_matrix);
     
     
@@ -100,7 +126,8 @@ function SendPost(){
 		}
 	};
     out="Class="+document.getElementById("Class").value;
-    xhttp.open("POST", "Predict", true);
+    xhttp.open("POST", "Submit", true);
+    console.log(out);
     xhttp.send(out);
 
 }
