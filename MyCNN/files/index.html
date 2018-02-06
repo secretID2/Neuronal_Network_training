@@ -2,6 +2,7 @@
 <input type="text" id="Class">
 <button onclick="SendPost()">Submit</button><br>
 <button onclick="Clear()">Clear</button>
+<button onclick="ToFile()">SaveToFile</button>
 <h1 id="Fail" style="visibility:hidden;"><font color="red">Fail to send data</font></h1>
 <h1 id="OK" style="visibility:hidden;"><font color="green">Post submited with success</font></h1>
 <script>
@@ -141,4 +142,25 @@ function SendPost(){
     xhttp.send(out);
 
 }
+    
+function ToFile(){
+    var xhttp=new XMLHttpRequest();
+    xhttp.onreadystatechange=function(){
+        if (this.readyState == 4 && this.status == 200){
+                document.getElementById("OK").style.visibility="visible";
+                setTimeout(function(){document.getElementById("OK").style.visibility="hidden";}, 1000);
+                console.log("OK3");
+        }
+        if (this.readyState == 4 && (this.status == 500||this.status == 404)) {
+                    document.getElementById("Fail").style.visibility="visible";
+                    setTimeout(function(){document.getElementById("Fail").style.visibility="hidden";}, 1000);
+                    console.log("Fail 3");
+        }
+    };
+    xhttp.open("GET", "Save", true);
+    xhttp.send();
+    
+}    
+    
+    
 </script>

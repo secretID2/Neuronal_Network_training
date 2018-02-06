@@ -31,7 +31,7 @@ def TurnDatasetToNumeric(dataset):
         
     return dataset
 
-data=np.array([])
+dataset=np.array([])
 
 @bt.route('/') # or @route('/login')
 def init():
@@ -39,12 +39,21 @@ def init():
 
 @bt.get('/Submit',method='POST')
 def Submit():
-    #global data
-    print(bt.request.forms.get('Class'))
+    global dataset
+    Class=bt.request.forms.get('Class')
+    Class=np.array([Class])
+    print()
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
     data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
     data=np.array(data)
+    data=np.hstack((data,Class))#equivalent to np.concatenate((a,b),axis=1)
+    dataset.append(data)
     print(data)
     return "OK"
+
+@bt.get('/Save')
+def Save():
+    return 'Bla'
+
 
 bt.run(host='localhost', port=80, server='paste')
