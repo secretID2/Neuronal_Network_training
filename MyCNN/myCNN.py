@@ -39,7 +39,7 @@ def init():
 
 @bt.get('/Submit',method='POST')
 def Submit():
-    global data
+    #global data
     print(bt.request.forms.get('Class'))
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
     data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
