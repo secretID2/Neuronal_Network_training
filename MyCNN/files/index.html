@@ -3,8 +3,10 @@
 <button onclick="SendPost()">Submit</button><br>
 <button onclick="Clear()">Clear</button>
 <button onclick="ToFile()">SaveToFile</button>
-<h1 id="Fail" style="visibility:hidden;"><font color="red">Fail to send data</font></h1>
-<h1 id="OK" style="visibility:hidden;"><font color="green">Post submited with success</font></h1>
+<div id="feedback">
+</div>
+<!--<h1 id="Fail" style="visibility:hidden;"><font color="red">Fail to send data</font></h1>
+<h1 id="OK" style="visibility:hidden;"><font color="green">Post submited with success</font></h1>-->
 <script>
 var canvas=document.getElementById("canvas");
 var context=canvas.getContext("2d");  
@@ -117,19 +119,19 @@ function SendPost(){
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			if(compareStrings(this.responseText,"OK")){
-				document.getElementById("OK").style.visibility="visible";
+				document.getElementById("feedback").innerHTML='<h1 id="OK" style="visibility:visible;"><font color="green">Post submited with success</font></h1>';
                 setTimeout(function(){document.getElementById("OK").style.visibility="hidden";}, 1000);
                 console.log("OK");
 			}
             else{
-                document.getElementById("Fail").style.visibility="visible";
+                document.getElementById("feedback").innerHTML='<h1 id="Fail" style="visibility:visible;"><font color="red">Fail to send data</font></h1>';
                 setTimeout(function(){document.getElementById("Fail").style.visibility="hidden";}, 1000);
                 console.log("Fail 1");
             }
 		}
         else{
                if (this.readyState == 4 && (this.status == 500||this.status == 404)) {
-                    document.getElementById("Fail").style.visibility="visible";
+                    document.getElementById("feedback").innerHTML='<h1 id="Fail" style="visibility:visible;"><font color="red">Fail to send data</font></h1>';
                     setTimeout(function(){document.getElementById("Fail").style.visibility="hidden";}, 1000);
                     console.log("Fail 2");
                 }
@@ -147,12 +149,12 @@ function ToFile(){
     var xhttp=new XMLHttpRequest();
     xhttp.onreadystatechange=function(){
         if (this.readyState == 4 && this.status == 200){
-                document.getElementById("OK").style.visibility="visible";
+                document.getElementById("feedback").innerHTML='<h1 id="OK" style="visibility:visible;"><font color="green">Data Saved in File!</font></h1>';
                 setTimeout(function(){document.getElementById("OK").style.visibility="hidden";}, 1000);
                 console.log("OK3");
         }
         if (this.readyState == 4 && (this.status == 500||this.status == 404)) {
-                    document.getElementById("Fail").style.visibility="visible";
+                    document.getElementById("feedback").innerHTML='<h1 id="Fail" style="visibility:visible;"><font color="red">Fail to Save data</font></h1>';
                     setTimeout(function(){document.getElementById("Fail").style.visibility="hidden";}, 1000);
                     console.log("Fail 3");
         }
