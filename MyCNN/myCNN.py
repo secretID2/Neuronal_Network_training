@@ -13,6 +13,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.models import model_from_json
 from sklearn import preprocessing
+import NN
 
 def categoricalToNumeric(array):
     le = preprocessing.LabelEncoder()
@@ -34,6 +35,10 @@ def TurnDatasetToNumeric(dataset):
 dataset=[]
 backdataset=pd.DataFrame([])
 matrix_size=10
+xpto=None
+Model=NN.NN()
+Model.GetClassifier()
+
 @bt.route('/') # or @route('/login')
 def init():
     global backdataset
@@ -68,6 +73,24 @@ def Save():
     #dataset2=TurnDatasetToNumeric(dataset)
     backdataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/MyCNN/myMNIST.txt',index=None,header=None)
     return 'OK'
+
+@bt.get('/ClassificationPage')
+def ClassificationPage():
+   
+    return bt.static_file('ClassifierPage.html',root="files/")
+
+@bt.get('/Predict',method='POST')
+def Predict():
+    global Model
+    global xpto
+    data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
+    data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
+    #data=np.array(data)
+    xpto=np.array([data])
+    xpto=xpto.astype('int64')
+    
+    Model.Predict(xpto)
+    return "OK"
 
 
 bt.run(host='localhost', port=80, server='paste')

@@ -1,10 +1,8 @@
 
 <canvas width="500" height="500" id="canvas" onmousemove="MousePos(event)" onmousedown="Repeat()" onmouseup="StopDraw()"></canvas>
-<input type="text" id="Class">
-<button onclick="SendPost()">Submit</button><br>
+<button onclick="SendPost()">Classify</button><br>
 <button onclick="Clear()">Clear</button>
-<button onclick="ToFile()">SaveToFile</button>
-<button onclick="ToClassifier()">Test_Classifier</button>
+
 <div id="feedback">
 </div>
 
@@ -18,15 +16,7 @@ var data_matrix=[];
 var matrix_size=10;
 var t;
 
-window.addEventListener("beforeunload", function(event) {
-    event.returnValue = "Write something clever here..";
-}); 
 
-function ToClassifier(){
-    window.location="ClassificationPage";
-}    
-    
-    
     
 function Clear(){
     for(i=0;i<matrix_size;i++){
@@ -151,8 +141,8 @@ function SendPost(){
             }
     
 	};
-    out="Class="+document.getElementById("Class").value+"&data="+data_matrix;
-    xhttp.open("POST", "Submit", true);
+    out="data="+data_matrix;
+    xhttp.open("POST", "Predict", true);
     console.log(out);
     xhttp.send(out);
 
