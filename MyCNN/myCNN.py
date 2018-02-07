@@ -31,10 +31,15 @@ def TurnDatasetToNumeric(dataset):
         
     return dataset
 
-dataset=np.array([])
-
+dataset=[]
+backdataset=pd.DataFrame([])
+matrix_size=10
 @bt.route('/') # or @route('/login')
 def init():
+    global backdataset
+    names=[i for i in range(matrix_size*matrix_size+1)]
+    backdataset=pd.read_csv('myMNIST.txt',names=names)
+    print(backdataset.head)
     return bt.static_file('index.html',root="files/")
 
 @bt.get('/Submit',method='POST')
@@ -49,11 +54,20 @@ def Submit():
     data=np.hstack((data,Class))#equivalent to np.concatenate((a,b),axis=1)
     dataset.append(data)
     print(data)
+    print(dataset)
     return "OK"
 
 @bt.get('/Save')
 def Save():
-    return 'Bla'
+    global dataset
+    global backdataset
+    dataset2=np.array(dataset)
+    dataset2=pd.DataFrame(dataset2)
+    #dataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/MyCNN/myMNIST.txt',index=None,header=None)
+    backdataset=pd.concat([backdataset,dataset2],axis=0)
+    #dataset2=TurnDatasetToNumeric(dataset)
+    backdataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/MyCNN/myMNIST.txt',index=None,header=None)
+    return 'OK'
 
 
 bt.run(host='localhost', port=80, server='paste')
