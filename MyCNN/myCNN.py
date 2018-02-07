@@ -39,7 +39,7 @@ def init():
     global backdataset
     names=[i for i in range(matrix_size*matrix_size+1)]
     backdataset=pd.read_csv('myMNIST.txt',names=names)
-    print(backdataset.head)
+    #print(backdataset.head)
     return bt.static_file('index.html',root="files/")
 
 @bt.get('/Submit',method='POST')

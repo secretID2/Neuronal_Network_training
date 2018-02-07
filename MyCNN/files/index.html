@@ -1,3 +1,4 @@
+
 <canvas width="500" height="500" id="canvas" onmousemove="MousePos(event)" onmousedown="Repeat()" onmouseup="StopDraw()"></canvas>
 <input type="text" id="Class">
 <button onclick="SendPost()">Submit</button><br>
@@ -5,6 +6,7 @@
 <button onclick="ToFile()">SaveToFile</button>
 <div id="feedback">
 </div>
+
 <!--<h1 id="Fail" style="visibility:hidden;"><font color="red">Fail to send data</font></h1>
 <h1 id="OK" style="visibility:hidden;"><font color="green">Post submited with success</font></h1>-->
 <script>
@@ -15,6 +17,10 @@ var data_matrix=[];
 var matrix_size=10;
 var t;
 
+window.addEventListener("beforeunload", function(event) {
+    event.returnValue = "Write something clever here..";
+}); 
+    
 function Clear(){
     for(i=0;i<matrix_size;i++){
         data_matrix[i]=[];
