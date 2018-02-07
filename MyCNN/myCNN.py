@@ -79,6 +79,7 @@ def ClassificationPage():
    
     return bt.static_file('ClassifierPage.html',root="files/")
 
+
 @bt.get('/Predict',method='POST')
 def Predict():
     global Model
