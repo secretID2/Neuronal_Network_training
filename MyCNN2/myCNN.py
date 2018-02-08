@@ -9,11 +9,12 @@ import bottle as bt
 import pandas as pd
 import numpy as np
 import os
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.models import model_from_json
+#from keras.models import Sequential
+#from keras.layers import Dense
+#from keras.models import model_from_json
 from sklearn import preprocessing
-import NN
+#import NN
+import ML_MegaFunction as ml
 
 import random
 import string
@@ -30,18 +31,19 @@ class Client:
     
     def __init__(self,_id):
         #Create obj NN from module NN
-        self.Model=NN.NN()
+        self.Model=ml.Predictor()
         self.dataset=[]
         self.id=_id
         self.password=self.GeneratePass()
         self.done=False
 
     def GetModel(self):
-        self.Model.GetClassifier()
+        data=pd.read_csv('myMNIST.txt',sep=",",header=None)
+        self.Predictor=self.Model.ReturnPredictor(data)
         self.done=True
         
     def Predict(self,data):
-        return self.Model.Predict(data)
+        return self.Predictor.predict(data)
     
     def DatasetAppend(self,data):
         self.dataset.append(data)
@@ -169,21 +171,21 @@ def GetModel():
                 
     return "not valid user!"
 
-@bt.get('/HowItIsGoing')
-def Loading():
-    for c in clients:
-        key = bt.request.get_cookie(str(clients[c].id))
-        
-        if key!=None:
-            if clients[c].password==key:
-                #valid user
-                client=clients[c]
-                if client.done:
-                    return "Done"
-                else:
-                    return "Not Yet"
-    
-    return "Not Yet"
+#@bt.get('/HowItIsGoing')
+#def Loading():
+#    for c in clients:
+#        key = bt.request.get_cookie(str(clients[c].id))
+#        
+#        if key!=None:
+#            if clients[c].password==key:
+#                #valid user
+#                client=clients[c]
+#                if client.done:
+#                    return "Done"
+#                else:
+#                    return "Not Yet"
+#    
+#    return "Not Yet"
 
 
 
@@ -213,8 +215,9 @@ def Predict():
                 #data=np.array(data)
                 data=np.array([data])
                 data=data.astype('int64')
-                client.Predict(data)
-                return "OK"
+                print(client.Predict(data))
+                #return client.Predict(data)
+                
             
    return "Fail"
 
