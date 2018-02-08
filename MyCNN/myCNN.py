@@ -52,7 +52,7 @@ def Submit():
     global dataset
     Class=bt.request.forms.get('Class')
     Class=np.array([Class])
-    print()
+    
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
     data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
     data=np.array(data)
