@@ -163,9 +163,10 @@ def GetModel():
             if clients[c].password==key:
                 #valid user
                 client=clients[c]
-                t=threading.Thread(target=client.GetModel())
-                get_model_threads[c]=t
-                t.start()
+                client.GetModel()
+#                t=threading.Thread(target=client.GetModel())
+#                get_model_threads[c]=t
+#                t.start()
                 #return bt.static_file("TrainingData.html",root="files/")
                 return bt.redirect("ClassificationPage")
                 
@@ -215,8 +216,8 @@ def Predict():
                 #data=np.array(data)
                 data=np.array([data])
                 data=data.astype('int64')
-                print(client.Predict(data))
-                #return client.Predict(data)
+                #print(client.Predict(data))
+                return client.Predict(data)
                 
             
    return "Fail"

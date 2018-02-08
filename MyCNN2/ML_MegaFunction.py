@@ -115,21 +115,21 @@ class Predictor:
         finalY=finalArray[:,class_index] 
         best_model.fit(finalX,finalY)
     	
-        Truearray=TrueErrorSet.values
-        TrueX=Truearray[:,0:class_index]
-        TrueY=Truearray[:,class_index]
-        predictions = best_model.predict(TrueX)
-        print('\n\nTrue Score: ',accuracy_score(TrueY, predictions))
-        print('Cunfusuion Matrix \n',confusion_matrix(TrueY, predictions))
-        #print(classification_report(TrueY, predictions))
-        self.loading=str(95)+'%'
-        FFArray=dataset.values
-        FFX=FFArray[:,0:class_index]
-        FFY=FFArray[:,class_index]
-        predictions = best_model.predict(FFX)
-        self.score=accuracy_score(FFY, predictions)
-        print('\n\nFinal Final Score: ',self.score)
-        print('Confusion matrix\n',confusion_matrix(FFY, predictions))
+#        Truearray=TrueErrorSet.values
+#        TrueX=Truearray[:,0:class_index]
+#        TrueY=Truearray[:,class_index]
+#        predictions = best_model.predict(TrueX)
+#        print('\n\nTrue Score: ',accuracy_score(TrueY, predictions))
+#        print('Cunfusuion Matrix \n',confusion_matrix(TrueY, predictions))
+#        #print(classification_report(TrueY, predictions))
+#        self.loading=str(95)+'%'
+#        FFArray=dataset.values
+#        FFX=FFArray[:,0:class_index]
+#        FFY=FFArray[:,class_index]
+#        predictions = best_model.predict(FFX)
+#        self.score=accuracy_score(FFY, predictions)
+#        print('\n\nFinal Final Score: ',self.score)
+#        print('Confusion matrix\n',confusion_matrix(FFY, predictions))
         self.loading=str(100)+'%'
         return best_model
     
