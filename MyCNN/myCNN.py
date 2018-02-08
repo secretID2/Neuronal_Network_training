@@ -54,20 +54,37 @@ matrix_size=10
 clients={}
 get_model_threads={}
 #----------------------
-dataset=[]
-backdataset=pd.DataFrame([])
 
 xpto=None
-Model=NN.NN()
-Model.GetClassifier()
+
 
 @bt.route('/') # or @route('/login')
 def init():
-    global backdataset
-    names=[i for i in range(matrix_size*matrix_size+1)]
-    backdataset=pd.read_csv('myMNIST.txt',names=names)
-    #print(backdataset.head)
-    return bt.static_file('index.html',root="files/")
+    global Id
+    num=0
+    #See if user has valid cookie
+    for c in clients:
+        key = bt.request.get_cookie(clients[c].username)
+        #has cookie
+        if key!=None:
+            if clients[c].password==key:
+                #valid user
+                return bt.static_file('index.html',root="files/")
+            else:
+                return "Not valid user"       
+        else:
+            num+=1
+    #Never was user and is valid
+    #Valid user but never enterd site
+    if num==len(clients):
+        Id+=1
+        client=Client(Id)
+        clients[Id]=client
+        print(Id,client.password)
+        bt.response.set_cookie(Id, str(client.password))
+        return bt.static_file('index.html',root="files/")
+    else:
+        return "Error! in creating client" 
 
 @bt.get('/Submit',method='POST')
 def Submit():
