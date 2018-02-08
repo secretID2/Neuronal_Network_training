@@ -15,26 +15,48 @@ from keras.models import model_from_json
 from sklearn import preprocessing
 import NN
 
-def categoricalToNumeric(array):
-    le = preprocessing.LabelEncoder()
-    le.fit(array)
-    return le.transform(array)
-    
-    
-def TurnDatasetToNumeric(dataset):
-        
-    for i in range(len(dataset.dtypes)):
-        if dataset.dtypes[i]==object:
-            v=dataset.iloc[:,i].values
-            #print(v)
-            v=categoricalToNumeric(v)
-            dataset.iloc[:,i]=v
-        
-    return dataset
+import random
+import string
 
+
+
+class Client:
+    
+    
+    def GeneratePass(self):
+        self.N=50
+        return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(self.N))
+    
+    
+    def __init__(self,_id):
+        #Create obj NN from module NN
+        self.Model=NN.NN()
+        self.dataset=[]
+        self.id=_id
+        self.password=self.GeneratePass()
+
+    def GetClassifier(self):
+        self.Model.GetClassifier()
+        
+    def Predict(self,data):
+        return self.Model.Predict(data)
+    
+    def DatasetAppend(self,data):
+        self.dataset.append(data)
+        
+    def SaveToFile(self):
+        with open("myMNIST.txt", "a") as myfile:
+            myfile.write(self.dataset)
+        
+
+Id=0
+matrix_size=10
+clients={}
+get_model_threads={}
+#----------------------
 dataset=[]
 backdataset=pd.DataFrame([])
-matrix_size=10
+
 xpto=None
 Model=NN.NN()
 Model.GetClassifier()
@@ -52,7 +74,7 @@ def Submit():
     global dataset
     Class=bt.request.forms.get('Class')
     Class=np.array([Class])
-    print()
+    print(Class)
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
     data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
     data=np.array(data)
@@ -72,6 +94,7 @@ def Save():
     backdataset=pd.concat([backdataset,dataset2],axis=0)
     #dataset2=TurnDatasetToNumeric(dataset)
     backdataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/MyCNN/myMNIST.txt',index=None,header=None)
+    dataset=[]
     return 'OK'
 
 @bt.get('/ClassificationPage')
