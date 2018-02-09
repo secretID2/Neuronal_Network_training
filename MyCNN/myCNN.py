@@ -32,12 +32,16 @@ def TurnDatasetToNumeric(dataset):
         
     return dataset
 
+
+
+
+
 dataset=[]
 backdataset=pd.DataFrame([])
 matrix_size=10
 xpto=[]
 Model=NN.NN()
-Model.GetClassifier()
+#Model.GetClassifier()
 
 @bt.route('/') # or @route('/login')
 def init():
@@ -76,7 +80,8 @@ def Save():
 
 @bt.get('/ClassificationPage')
 def ClassificationPage():
-   
+    global Model
+    Model.GetClassifier()
     return bt.static_file('ClassifierPage.html',root="files/")
 
 
@@ -84,6 +89,7 @@ def ClassificationPage():
 def Predict():
     global Model
     global xpto
+    
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
     data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
     #data=np.array(data)
