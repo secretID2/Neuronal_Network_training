@@ -148,6 +148,7 @@ def Save():
                 t=threading.Thread(target=client.SaveToFile())
                 save_to_file_threads[c]=t
                 t.start()
+                client.dataset=[]
                 return 'OK'
         
     return "Fail"
