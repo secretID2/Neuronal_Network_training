@@ -35,7 +35,7 @@ def TurnDatasetToNumeric(dataset):
 dataset=[]
 backdataset=pd.DataFrame([])
 matrix_size=10
-xpto=None
+xpto=[]
 Model=NN.NN()
 Model.GetClassifier()
 
@@ -87,10 +87,10 @@ def Predict():
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
     data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
     #data=np.array(data)
-    xpto=np.array([data])
-    xpto=xpto.astype('int64')
-    
-    Model.Predict(xpto)
+    data=np.array([data])
+    data=data.astype('int64')
+    xpto.append(data)
+    #Model.Predict(xpto)
     return "OK"
 
 
