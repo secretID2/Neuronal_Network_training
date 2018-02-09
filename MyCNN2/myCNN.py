@@ -163,10 +163,10 @@ def GetModel():
             if clients[c].password==key:
                 #valid user
                 client=clients[c]
-                client.GetModel()
-#                t=threading.Thread(target=client.GetModel())
-#                get_model_threads[c]=t
-#                t.start()
+#                client.GetModel()
+                t=threading.Thread(target=client.GetModel())
+                get_model_threads[c]=t
+                t.start()
                 #return bt.static_file("TrainingData.html",root="files/")
                 return bt.redirect("ClassificationPage")
                 
