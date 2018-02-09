@@ -33,7 +33,17 @@ def TurnDatasetToNumeric(dataset):
     return dataset
 
 
-
+def SaveToFile(dataset):
+        output=""
+        for line in dataset:
+            for i in range(len(line)):
+                if i==len(line)-1:
+                    output+=str(line[i])
+                else:    
+                    output+=str(line[i])+","
+            output+="\n"
+        with open("myMNIST.txt", "a") as myfile:
+            myfile.write(output)
 
 
 dataset=[]
@@ -45,10 +55,10 @@ Model=NN.NN()
 
 @bt.route('/') # or @route('/login')
 def init():
-    global backdataset
-    names=[i for i in range(matrix_size*matrix_size+1)]
-    backdataset=pd.read_csv('myMNIST.txt',names=names)
-    #print(backdataset.head)
+#    global backdataset
+#    names=[i for i in range(matrix_size*matrix_size+1)]
+#    backdataset=pd.read_csv('myMNIST.txt',names=names)
+#    #print(backdataset.head)
     return bt.static_file('index.html',root="files/")
 
 @bt.get('/Submit',method='POST')
@@ -69,19 +79,21 @@ def Submit():
 @bt.get('/Save')
 def Save():
     global dataset
-    global backdataset
-    dataset2=np.array(dataset)
-    dataset2=pd.DataFrame(dataset2)
+#    global backdataset
+#    dataset2=np.array(dataset)
+#    dataset2=pd.DataFrame(dataset2)
     #dataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/MyCNN/myMNIST.txt',index=None,header=None)
-    backdataset=pd.concat([backdataset,dataset2],axis=0)
-    #dataset2=TurnDatasetToNumeric(dataset)
-    backdataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/MyCNN/myMNIST.txt',index=None,header=None)
+#    backdataset=pd.concat([backdataset,dataset2],axis=0)
+#    #dataset2=TurnDatasetToNumeric(dataset)
+#    backdataset.to_csv('C:/Users/lcristovao/Documents/GitHub/Neuronal_Network_training/MyCNN/myMNIST.txt',index=None,header=None)
+    SaveToFile(dataset)
+    dataset=[]
     return 'OK'
 
 @bt.get('/ClassificationPage')
 def ClassificationPage():
-    global Model
-    Model.GetClassifier()
+#    global Model
+#    Model.GetClassifier()
     return bt.static_file('ClassifierPage.html',root="files/")
 
 
@@ -101,3 +113,12 @@ def Predict():
 
 
 bt.run(host='localhost', port=80, server='paste')
+
+
+Model.GetClassifier()
+for number in xpto:
+    print(Model.Predict(number))
+
+
+
+
