@@ -53,7 +53,7 @@ class NN:
 #conv_1 = Convolution2D(conv_depth_1, (kernel_size, kernel_size), padding='same', activation='relu')(inp)
       
         conv1=Conv2D(16, (3,3),padding="same", activation='relu')(inp)
-        conv2=Conv2D(16, (5,5),padding="same", activation='relu')(conv1)
+        conv2=Conv2D(16, (3,3),padding="same", activation='relu')(conv1)
         conv3=Conv2D(32,(7,7),padding="same", activation='relu')(conv2)
         
         flat = Flatten()(conv3)
@@ -93,7 +93,7 @@ class NN:
     def Predict(self,data):
             
     #        data2=[data]
-            #print(data)
+            print(data)
             prediction=self.model.predict(data)
             print("predict:\nClasse: ",self.classes.columns[prediction.argsort()[0][::-1]][0],"->",prediction[0][prediction.argsort()[0][::-1]][0]*100,"%")
             print("predict:\nClasse: ",self.classes.columns[prediction.argsort()[0][::-1]][1],"->",prediction[0][prediction.argsort()[0][::-1]][1]*100,"%")
