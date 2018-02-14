@@ -93,7 +93,7 @@ class NN:
     def Predict(self,data):
             
     #        data2=[data]
-            print(data)
+            #print(data)
             prediction=self.model.predict(data)
             print("predict:\nClasse: ",self.classes.columns[prediction.argsort()[0][::-1]][0],"->",prediction[0][prediction.argsort()[0][::-1]][0]*100,"%")
             print("predict:\nClasse: ",self.classes.columns[prediction.argsort()[0][::-1]][1],"->",prediction[0][prediction.argsort()[0][::-1]][1]*100,"%")
