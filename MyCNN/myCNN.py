@@ -118,10 +118,10 @@ def Predict():
 bt.run(host='localhost', port=80, server='paste')
 
 
-#Model.GetClassifier()
+Model.GetClassifier()
 
-#for number in xpto:
-#    print(Model.Predict(number))
+for number in xpto:
+    print(Model.Predict(number))
 s=""
 for number in normal_data:
     s+="\n"
@@ -135,3 +135,23 @@ for number in normal_data:
         s+="\n"
 print(s)
 
+
+
+
+######Print training dataset##############################
+#dataset=pd.read_csv('myMNIST.txt',sep=",",header=None)
+#s=""
+#for h in range (dataset.shape[0]):
+#    data=dataset.iloc[h,:-1].values.reshape(10,10).T
+#    classe=dataset.iloc[h,-1]
+#    for i in range (data.shape[0]):
+#        for j in range(data.shape[1]):
+#            if(data[i][j]==0):
+#                s+=" "
+#            else:
+#                s+="*"
+#        s+=str(classe)+"\n"
+#        
+#        
+#with open("DatasetFigures.txt", "a") as myfile:
+#    myfile.write(s)
