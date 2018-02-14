@@ -95,6 +95,12 @@ function MouseClick(){
     var Mx=Math.floor(nx/(1/matrix_size));
     var My=Math.floor(ny/(1/matrix_size));
      console.log("Mpos: "+Mx+","+My);
+    if(Mx>=matrix_size ){
+        Mx=matrix_size-1;
+    }
+    if(My>=matrix_size){
+        My=matrix_size-1;
+    }
     //change data matrix
     data_matrix[Mx][My]=1;
     //draw square
