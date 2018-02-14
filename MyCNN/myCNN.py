@@ -51,7 +51,7 @@ backdataset=pd.DataFrame([])
 matrix_size=10
 xpto=[]
 Model=NN.NN()
-#Model.GetClassifier()
+Model.GetClassifier()
 
 @bt.route('/') # or @route('/login')
 def init():
@@ -72,8 +72,8 @@ def Submit():
     data=np.array(data)
     data=np.hstack((data,Class))#equivalent to np.concatenate((a,b),axis=1)
     dataset.append(data)
-    print(data)
-    print(dataset)
+    #print(data)
+    #print(dataset)
     return "OK"
 
 @bt.get('/Save')
@@ -115,7 +115,7 @@ def Predict():
 bt.run(host='localhost', port=80, server='paste')
 
 
-Model.GetClassifier()
+#Model.GetClassifier()
 for number in xpto:
     print(Model.Predict(number))
 
