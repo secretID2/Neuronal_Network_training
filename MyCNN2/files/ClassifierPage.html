@@ -85,6 +85,8 @@ function MouseClick(){
     var Mx=Math.floor(nx/(1/matrix_size));
     var My=Math.floor(ny/(1/matrix_size));
      console.log("Mpos: "+Mx+","+My);
+    if(Mx>=matrix_size){Mx=matrix_size-1}
+    if(My>=matrix_size){My=matrix_size-1}
     //change data matrix
     data_matrix[Mx][My]=1;
     //draw square
@@ -121,16 +123,8 @@ function SendPost(){
 	var xhttp=new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			if(compareStrings(this.responseText,"OK")){
-				document.getElementById("feedback").innerHTML='<h1 id="OK" style="visibility:visible;"><font color="green">Post submited with success</font></h1>';
-                setTimeout(function(){document.getElementById("OK").style.visibility="hidden";}, 1000);
-                console.log("OK");
-			}
-            else{
-                document.getElementById("feedback").innerHTML='<h1 id="Fail" style="visibility:visible;"><font color="red">Fail to send data</font></h1>';
-                setTimeout(function(){document.getElementById("Fail").style.visibility="hidden";}, 1000);
-                console.log("Fail 1");
-            }
+			
+				document.getElementById("feedback").innerHTML="<h1>"+this.response+"</h1>";
 		}
         else{
                if (this.readyState == 4 && (this.status == 500||this.status == 404)) {

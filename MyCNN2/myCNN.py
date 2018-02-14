@@ -9,11 +9,11 @@ import bottle as bt
 import pandas as pd
 import numpy as np
 import os
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.models import model_from_json
+#from keras.models import Sequential
+#from keras.layers import Dense
+#from keras.models import model_from_json
 from sklearn import preprocessing
-import NN
+import ML_MegaFunction as ml
 
 def categoricalToNumeric(array):
     le = preprocessing.LabelEncoder()
@@ -50,7 +50,8 @@ dataset=[]
 backdataset=pd.DataFrame([])
 matrix_size=10
 xpto=[]
-Model=NN.NN()
+Model=ml.Predictor()
+predictor=None
 #Model.GetClassifier()
 
 @bt.route('/') # or @route('/login')
@@ -92,14 +93,15 @@ def Save():
 
 @bt.get('/ClassificationPage')
 def ClassificationPage():
-#    global Model
-#    Model.GetClassifier()
+    global Model
+    global predictor
+    predictor=Model.ReturnPredictor(dataset=pd.read_csv('myMNIST.txt',sep=",",header=None))
     return bt.static_file('ClassifierPage.html',root="files/")
 
 
 @bt.get('/Predict',method='POST')
 def Predict():
-    global Model
+    global predictor
     global xpto
     
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
@@ -107,17 +109,15 @@ def Predict():
     #data=np.array(data)
     data=np.array([data])
     data=data.astype('int64')
-    xpto.append(data)
-    #Model.Predict(xpto)
-    return "OK"
+    
+    result =predictor.predict(data)
+    return str(result)
 
 
 bt.run(host='localhost', port=80, server='paste')
 
 
-Model.GetClassifier()
-for number in xpto:
-    print(Model.Predict(number))
+
 
 
 
