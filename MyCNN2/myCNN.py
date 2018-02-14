@@ -38,7 +38,7 @@ class Client:
         self.done=False
 
     def GetModel(self):
-        data=pd.read_csv('myMNIST.txt',sep=",",header=None)
+        data=pd.read_csv('myMNIST.txt',sep=",",header=None,names=[str(i) for i in range(matrix_size*matrix_size)])
         self.Predictor=self.Model.ReturnPredictor(data)
         self.done=True
         
