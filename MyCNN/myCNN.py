@@ -107,7 +107,7 @@ def Predict():
     #data=np.array(data)
     data=np.array([data])
     data=data.astype('int64')
-    xpto.append(data)
+    xpto.append(data.reshape(1,10,10,1))
     #Model.Predict(xpto)
     return "OK"
 

@@ -6,8 +6,8 @@ Created on Fri Feb  2 10:52:55 2018
 """
 
 from keras.models import Sequential
-from keras.layers import Dense
-from keras.models import model_from_json
+from keras.layers import Dense,Conv2D,Input,Flatten,Dropout
+from keras.models import model_from_json,Model
 import numpy as np
 import os
 import pandas as pd
@@ -42,23 +42,40 @@ class NN:
         
         
         # create model
-        self.model = Sequential()
-        self.model.add(Dense(24, input_dim=n_atributes, activation='relu'))
-        self.model.add(Dense(12, activation='relu'))
-        self.model.add(Dense(8, activation='relu'))
-        self.model.add(Dense(number_of_outputs, activation='sigmoid'))
+#        self.model = Sequential()
+#        self.model.add(Dense(24, input_dim=n_atributes, activation='relu'))
+#        self.model.add(Dense(12, activation='relu'))
+#        self.model.add(Dense(8, activation='relu'))
+#        self.model.add(Dense(number_of_outputs, activation='sigmoid'))
         
+        inp = Input(shape=(10, 10,1)) # depth goes last in TensorFlow back-end (first in Theano)
+# Conv [32] -> Conv [32] -> Pool (with dropout on the pooling layer)
+#conv_1 = Convolution2D(conv_depth_1, (kernel_size, kernel_size), padding='same', activation='relu')(inp)
+      
+        conv1=Conv2D(16, (3,3),padding="same", activation='relu')(inp)
+        conv2=Conv2D(16, (3,3),padding="same", activation='relu')(conv1)
+        conv3=Conv2D(32,(7,7),padding="same", activation='relu')(conv2)
+        
+        flat = Flatten()(conv3)
+        hidden = Dense(128, activation='relu')(flat)
+        drop = Dropout(0.1)(hidden)
+
+        out=Dense( number_of_outputs, activation='softmax')(drop)
         
         # Compile model
-        self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        self.model = Model(inputs=inp, outputs=out) # To define a model, just specify its input and output layers
+
+        self.model.compile(loss='categorical_crossentropy', # using the cross-entropy loss function
+              optimizer='adam', # using the Adam optimiser
+              metrics=['accuracy']) # reporting the accuracy
         
         # Fit the model
-        self.model.fit(self.X, Y, epochs=300, batch_size=10)
+        self.model.fit(self.X.reshape(self.X.shape[0],10,10,1), Y, epochs=300, batch_size=10)
         
         
         # evaluate the model
-        scores = self.model.evaluate(self.X, Y)
-        print("\n%s: %.2f%%" % (self.model.metrics_names[1], scores[1]*100))
+        #scores = self.model.evaluate(self.X.reshape(self.X.shape[0],10,10,1), Y)
+        #print("\n%s: %.2f%%" % (self.model.metrics_names[1], scores[1]*100))
         
         
         #print("Input:",X[0,:],"->",Y[0])

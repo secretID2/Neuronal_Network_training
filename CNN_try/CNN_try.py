@@ -25,7 +25,7 @@ hidden_size = 512 # the FC layer will have 512 neurons
 num_train, height, width, depth = X_train.shape # there are 50000 training examples in CIFAR-10 
 num_test = X_test.shape[0] # there are 10000 test examples in CIFAR-10
 num_classes = np.unique(y_train).shape[0] # there are 10 image classes
-
+print("x",X_train.shape)
 X_train = X_train.astype('float32') 
 X_test = X_test.astype('float32')
 X_train /= np.max(X_train) # Normalise data to [0, 1] range
