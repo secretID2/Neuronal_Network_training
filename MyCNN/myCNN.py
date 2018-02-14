@@ -118,13 +118,14 @@ def Predict():
 bt.run(host='localhost', port=80, server='paste')
 
 
-Model.GetClassifier()
+#Model.GetClassifier()
 
 for number in xpto:
     print(Model.Predict(number))
 s=""
 for number in normal_data:
     s+="\n"
+    #print(number)
     number=np.array(number).flatten().reshape(10,10).T
     for i in range (number.shape[0]):
         for j in range(number.shape[1]):
