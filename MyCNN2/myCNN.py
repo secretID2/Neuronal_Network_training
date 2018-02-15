@@ -73,8 +73,8 @@ def Submit():
     data=np.array(data)
     data=np.hstack((data,Class))#equivalent to np.concatenate((a,b),axis=1)
     dataset.append(data)
-    print(data)
-    print(dataset)
+    #print(data)
+    #print(dataset)
     return "OK"
 
 @bt.get('/Save')
@@ -112,6 +112,25 @@ def Predict():
     
     result =predictor.predict(data)
     return str(result)
+
+
+@bt.get('/Correction',method='POST')
+def Correction():
+    global predictor
+    global xpto
+    data_to_send=[]
+    data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
+    Class=bt.request.forms.get("correction")
+    Class=np.array([Class])
+    data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
+    #data=np.array(data)
+    data=np.array(data)
+    data=np.hstack((data,Class))#equivalent to np.concatenate((a,b),axis=1)
+    data_to_send.append(data)
+    #data=data.astype('int64')
+    print(data)
+    SaveToFile(data_to_send)
+    return "Ok"
 
 
 bt.run(host='localhost', port=80, server='paste')
