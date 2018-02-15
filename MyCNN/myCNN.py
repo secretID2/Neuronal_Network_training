@@ -122,6 +122,7 @@ bt.run(host='localhost', port=80, server='paste')
 
 for number in xpto:
     print(Model.Predict(number))
+    
 s=""
 for number in normal_data:
     s+="\n"
