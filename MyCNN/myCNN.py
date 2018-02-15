@@ -51,8 +51,8 @@ backdataset=pd.DataFrame([])
 matrix_size=10
 xpto=[]
 normal_data=[]
-#Model=NN.NN()
-#Model.GetClassifier()
+Model=NN.NN()
+Model.GetClassifier()
 
 @bt.route('/') # or @route('/login')
 def init():
