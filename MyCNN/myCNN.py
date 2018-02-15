@@ -139,7 +139,7 @@ print(s)
 
 
 #Add to DB the tests
-#right_answers=[3]
+#right_answers=[8,0]
 #dataset=[]
 #for l in range(len(normal_data)):
 #    normal_data[l].append(right_answers[l])
@@ -148,7 +148,7 @@ print(s)
 #    dataset.append(np.array(line).flatten())
 #    
 #SaveToFile(dataset)
-
+#
 ######Print training dataset##############################
 #dataset=pd.read_csv('myMNIST.txt',sep=",",header=None)
 #s=""
