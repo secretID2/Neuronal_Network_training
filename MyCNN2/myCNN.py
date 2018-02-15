@@ -52,6 +52,7 @@ matrix_size=10
 xpto=[]
 Model=ml.Predictor()
 predictor=None
+normal_data=[]
 #Model.GetClassifier()
 
 @bt.route('/') # or @route('/login')
@@ -106,17 +107,54 @@ def Predict():
     
     data=bt.request.forms.get("data")#np.fromstring('\x01\x02', dtype=np.uint8)
     data=[int(i) for i in data.split(',')]#values = [int(i) for i in lineDecoded.split(',')] 
-    #data=np.array(data)
+    normal_data.append(data)
     data=np.array([data])
     data=data.astype('int64')
-    
+    xpto.append(data)
     result =predictor.predict(data)
     return str(result)
 
 
 bt.run(host='localhost', port=80, server='paste')
 
+####See results#########
+#for number in xpto:
+#    print(predictor.Predict(number))
+#    
+#s=""
+#for number in normal_data:
+#    s+="\n"
+#    #print(number)
+#    number=np.array(number).flatten().reshape(10,10).T
+#    for i in range (number.shape[0]):
+#        for j in range(number.shape[1]):
+#            if(number[i][j]==0):
+#                s+=" "
+#            else:
+#                s+="*"
+#        s+="\n"
+#print(s)
 
+
+
+
+######Print training dataset##############################
+#dataset=pd.read_csv('myMNIST.txt',sep=",",header=None)
+#s=""
+#for h in range (dataset.shape[0]):
+#    data=dataset.iloc[h,:-1].values.reshape(10,10).T
+#    classe=dataset.iloc[h,-1]
+#    for i in range (data.shape[0]):
+#        for j in range(data.shape[1]):
+#            if(data[i][j]==0):
+#                s+=" "
+#            else:
+#                s+="*"
+#        s+=str(classe)+"\n"
+#        
+#        
+#with open("DatasetFigures.txt", "a") as myfile:
+#    myfile.write(s)
 
 
 
