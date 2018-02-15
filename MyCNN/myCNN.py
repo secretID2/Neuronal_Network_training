@@ -51,8 +51,8 @@ backdataset=pd.DataFrame([])
 matrix_size=10
 xpto=[]
 normal_data=[]
-#Model=NN.NN()
-#Model.GetClassifier()
+Model=NN.NN()
+Model.GetClassifier()
 
 @bt.route('/') # or @route('/login')
 def init():
@@ -139,7 +139,7 @@ print(s)
 
 
 #Add to DB the tests
-#right_answers=[8,0]
+#right_answers=[0,1,2,3,4,5,6,7,8,9]
 #dataset=[]
 #for l in range(len(normal_data)):
 #    normal_data[l].append(right_answers[l])
@@ -148,7 +148,7 @@ print(s)
 #    dataset.append(np.array(line).flatten())
 #    
 #SaveToFile(dataset)
-#
+
 ######Print training dataset##############################
 #dataset=pd.read_csv('myMNIST.txt',sep=",",header=None)
 #s=""
