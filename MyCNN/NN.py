@@ -69,7 +69,7 @@ class NN:
               metrics=['accuracy']) # reporting the accuracy
         
         # Fit the model
-        self.model.fit(self.X.reshape(self.X.shape[0],10,10,1), Y, epochs=300, batch_size=10)
+        self.model.fit(self.X.reshape(self.X.shape[0],10,10,1), Y, epochs=400, batch_size=10)
         
         
         # evaluate the model
