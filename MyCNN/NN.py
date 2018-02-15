@@ -49,8 +49,7 @@ class NN:
 #        self.model.add(Dense(number_of_outputs, activation='sigmoid'))
         
         inp = Input(shape=(10, 10,1)) # depth goes last in TensorFlow back-end (first in Theano)
-# Conv [32] -> Conv [32] -> Pool (with dropout on the pooling layer)
-#conv_1 = Convolution2D(conv_depth_1, (kernel_size, kernel_size), padding='same', activation='relu')(inp)
+
       
         conv1=Conv2D(16, (3,3),padding="same", activation='relu')(inp)
         conv2=Conv2D(16, (5,5),padding="same", activation='relu')(conv1)
