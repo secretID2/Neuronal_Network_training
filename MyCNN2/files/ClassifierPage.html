@@ -5,7 +5,11 @@
 
 <div id="feedback">
 </div>
+<<<<<<< HEAD
 
+=======
+Correction<input id="correction" type="text"><button onclick="SubmitCorrection()">Submit Correction</button>
+>>>>>>> CNN_try/new-network
 <!--<h1 id="Fail" style="visibility:hidden;"><font color="red">Fail to send data</font></h1>
 <h1 id="OK" style="visibility:hidden;"><font color="green">Post submited with success</font></h1>-->
 <script>
@@ -142,6 +146,34 @@ function SendPost(){
 
 }
     
+<<<<<<< HEAD
+=======
+function SubmitCorrection(){
+	var xhttp=new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			
+				document.getElementById("feedback").innerHTML="<h1><font color='green'>Submited Correction!</font></h1>";
+		}
+        else{
+               if (this.readyState == 4 && (this.status == 500||this.status == 404)) {
+                    document.getElementById("feedback").innerHTML='<h1 id="Fail" style="visibility:visible;"><font color="red">Fail to send data</font></h1>';
+                    setTimeout(function(){document.getElementById("Fail").style.visibility="hidden";}, 1000);
+                    console.log("Fail 2");
+                }
+            }
+    
+	};
+    out="data="+data_matrix+"&correction="+document.getElementById("correction").value;
+    xhttp.open("POST", "Correction", true);
+    console.log(out);
+    xhttp.send(out);
+
+}    
+    
+
+    
+>>>>>>> CNN_try/new-network
 function ToFile(){
     var xhttp=new XMLHttpRequest();
     xhttp.onreadystatechange=function(){
