@@ -111,7 +111,7 @@ def Predict():
     data=np.array([data])
     data=data.astype('int64')
     xpto.append(data.reshape(1,10,10,1))
-    #Model.Predict(xpto)
+    Model.Predict(data)
     return "OK"
 
 
@@ -120,22 +120,22 @@ bt.run(host='localhost', port=80, server='paste')
 
 #Model.GetClassifier()
 #test results
-for number in xpto:
-    print(Model.Predict(number))
-#print what was tested    
-s=""
-for number in normal_data:
-    s+="\n"
-    #print(number)
-    number=np.array(number).flatten().reshape(10,10).T
-    for i in range (number.shape[0]):
-        for j in range(number.shape[1]):
-            if(number[i][j]==0):
-                s+=" "
-            else:
-                s+="*"
-        s+="\n"
-print(s)
+#for number in xpto:
+#    print(Model.Predict(number))
+##print what was tested    
+#s=""
+#for number in normal_data:
+#    s+="\n"
+#    #print(number)
+#    number=np.array(number).flatten().reshape(10,10).T
+#    for i in range (number.shape[0]):
+#        for j in range(number.shape[1]):
+#            if(number[i][j]==0):
+#                s+=" "
+#            else:
+#                s+="*"
+#        s+="\n"
+#print(s)
 
 
 #Add to DB the tests
