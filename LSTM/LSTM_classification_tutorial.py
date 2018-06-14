@@ -6,15 +6,16 @@ Created on Thu Jun 14 09:49:57 2018
 """
 
 # LSTM for sequence classification in the IMDB dataset
-import numpy
+import numpy as np
 from keras.datasets import imdb
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
 from keras.layers.embeddings import Embedding
 from keras.preprocessing import sequence
+from keras.models import load_model
 # fix random seed for reproducibility
-numpy.random.seed(7)
+np.random.seed(7)
 # load the dataset but only keep the top n words, zero the rest
 top_words = 5000
 (X_train, y_train), (X_test, y_test) = imdb.load_data(num_words=top_words)
@@ -34,3 +35,9 @@ model.fit(X_train, y_train, epochs=3, batch_size=64)
 # Final evaluation of the model
 scores = model.evaluate(X_test, y_test, verbose=0)
 print("Accuracy: %.2f%%" % (scores[1]*100))
+#save model
+model.save("LSTM87%.h5")
+
+
+saved_model=load_model("LSTM87%.h5")
+print(np.round(saved_model.predict(X_test[:5])))
